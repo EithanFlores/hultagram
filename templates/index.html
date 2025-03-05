@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    {% for post in posts %} z
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <img src="{{ url_for('static', filename='uploads/' + post.image_filename) }}" class="card-img-top post-image" alt="Post image">
+            <div class="card-body">
+                <div class="post-header">
+                    <div class="profile-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="post-username">Professor Todd</div>
+                </div>
+                <p class="card-text post-caption">{{ post.caption }}</p>
+                <p class="text-muted post-time"><small>{{ post.time_since() }}</small></p>
+                <div class="d-flex align-items-center">
+                    <form action="{{ url_for('like_post', post_id=post.id) }}" method="POST" class="me-2">
+                        <button type="submit" class="btn btn-sm text-danger">
+                            <i class="bi bi-heart"></i>
+                        </button>
+                    </form>
+                    <span>{{ post.likes }} like{% if post.likes != 1 %}s{% endif %}</span>
+                </div>
+                <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn btn-outline-primary mt-2">View Post</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
